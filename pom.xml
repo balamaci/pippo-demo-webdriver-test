@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>ro.fortsoft.pippo.demo.tests</groupId>
+    <artifactId>tests</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+
+    <properties>
+        <compiler.version>1.7</compiler.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <guava.version>17.0</guava.version>
+        <docker.output.dir>${project.build.directory}/docker_output_dir</docker.output.dir>
+    </properties>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.11</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-api</artifactId>
+            <version>2.39.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.detro.ghostdriver</groupId>
+            <artifactId>phantomjsdriver</artifactId>
+            <version>1.1.0</version>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+                <plugin>
+                    <inherited>true</inherited>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>2.5.1</version>
+                    <configuration>
+                        <source>${compiler.version}</source>
+                        <target>${compiler.version}</target>
+                        <optimize>true</optimize>
+                        <encoding>UTF-8</encoding>
+                        <showWarnings>true</showWarnings>
+                        <showDeprecation>true</showDeprecation>
+                    </configuration>
+                </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.2.1</version>
+                <executions>
+                    <execution>
+                        <id>start-tomcat-docker</id>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <phase>pre-integration-test</phase>
+                        <configuration>
+                            <environmentVariables>
+                                <DOCKER_IMAGE_NAME>balamaci/tomcat7</DOCKER_IMAGE_NAME>
+                                <DOCKER_OUTPUT_DIR>${docker.output.dir}</DOCKER_OUTPUT_DIR>
+                            </environmentVariables>
+                            <executable>${project.basedir}/scripts/start-docker-tomcat.sh</executable>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>properties-maven-plugin</artifactId>
+                <version>1.0-alpha-2</version>
+                <executions>
+                    <execution>
+                        <id>read-container-properties</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>read-project-properties</goal>
+                        </goals>
+                        <configuration>
+                            <files>
+                                <file>${docker.output.dir}/container.properties</file>
+                            </files>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+
+            <plugin>
+                <groupId>org.codehaus.cargo</groupId>
+                <artifactId>cargo-maven2-plugin</artifactId>
+                <version>1.4.11</version>
+                <configuration>
+                    <container>
+                        <containerId>tomcat7x</containerId>
+                        <type>remote</type>
+                    </container>
+                    <configuration>
+                        <type>runtime</type>
+                        <properties>
+                            <cargo.hostname>${CONTAINER_IP}</cargo.hostname>
+                            <cargo.servlet.port>8080</cargo.servlet.port>
+                            <cargo.remote.username>admin</cargo.remote.username>
+                            <cargo.remote.password>admin</cargo.remote.password>
+                        </properties>
+                    </configuration>
+                    <deployer>
+                        <type>remote</type>
+                    </deployer>
+                    <deployables>
+                        <deployable>
+                            <type>war</type>
+                            <location>${project.build.directory}/pippo-demo.war</location>
+                            <properties>
+                                <context>pippo</context>
+                            </properties>
+                        </deployable>
+                    </deployables>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>war-deploy</id>
+                        <phase>integration-test</phase>
+                        <goals>
+                            <goal>deploy</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>**/*WD.java</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>2.18.1</version>
+                <configuration>
+                    <systemPropertyVariables>
+                        <phantomjs.binary.path>node_modules/phantomjs/lib/phantom/bin/phantomjs</phantomjs.binary.path>
+                        <container.host>${CONTAINER_IP}:8080</container.host>
+                    </systemPropertyVariables>
+
+                    <!--<argLine>${maven.surefire.argLine} ${failsafe.argLine}</argLine>-->
+                    <includes>
+                        <include>**/*WD.java</include>
+                        <!--<include>${maven.test.remoteCategory.placeholder}</include>-->
+                        <!--<testFailureIgnore>${mavenTestFailureIgnore}</testFailureIgnore>-->
+                    </includes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>failsafe-integration-tests</id>
+                        <phase>integration-test</phase>
+                        <goals>
+                            <goal>integration-test</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <dependencies>
+
+                </dependencies>
+            </plugin>
+
+            <!--<plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.2.1</version>
+                <executions>
+                    <execution>
+                        <id>stop-tomcat-docker</id>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <phase>post-integration-test</phase>
+                        <configuration>
+                            <environmentVariables>
+                                <CONTAINER_ID>${CONTAINER_ID}</CONTAINER_ID>
+                            </environmentVariables>
+                            <executable>${project.basedir}/scripts/stop-docker-tomcat.sh</executable>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>-->
+        </plugins>
+    </build>
+</project>
