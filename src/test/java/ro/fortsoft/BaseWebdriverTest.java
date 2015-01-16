@@ -27,7 +27,7 @@ public abstract class BaseWebdriverTest {
     @BeforeClass
     public static void init() throws Exception {
 //        serverUrl = "http://" + System.getProperty("container.host");
-        serverUrl = "http://172.17.0.6:8080/";
+        serverUrl = "http://172.17.0.7:8080";
         System.out.println("Container url " + serverUrl);
         phantomJSDriverService = PhantomJSDriverService.createDefaultService();
         phantomJSDriverService.start();
