@@ -1,4 +1,4 @@
-package ro.fortsoft;
+package ro.fortsoft.pippo.demo.integration;
 
 import org.junit.AfterClass;
 import org.junit.Before;

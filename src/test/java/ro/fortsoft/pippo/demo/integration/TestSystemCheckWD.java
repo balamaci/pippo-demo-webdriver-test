@@ -1,7 +1,6 @@
-package ro.fortsoft;
+package ro.fortsoft.pippo.demo.integration;
 
 import com.google.common.base.Function;
-import org.jsoup.Jsoup;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
