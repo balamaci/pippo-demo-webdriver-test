@@ -11,7 +11,7 @@
 
 
     <properties>
-        <phantomjs.binary.path>node_modules/phantomjs/lib/phantom/bin/phantomjs</phantomjs.binary.path>
+        <phantomjs.binary.path>${project.build.directory}/node_modules/phantomjs/lib/phantom/bin/phantomjs</phantomjs.binary.path>
         <docker.output.dir>${project.build.directory}/docker_output_dir</docker.output.dir>
 
         <jsoup.version>1.7.3</jsoup.version>
