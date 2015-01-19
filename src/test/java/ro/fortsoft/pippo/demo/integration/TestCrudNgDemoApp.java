@@ -11,7 +11,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 /**
  * @author Serban Balamaci
  */
-public class TestCrudNGApp extends BaseWebdriverTest {
+public class TestCrudNgDemoApp extends BaseWebdriverTest {
 
     public static final String APP_CONTEXT = "pippo";
 
