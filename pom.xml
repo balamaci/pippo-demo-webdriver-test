@@ -142,7 +142,7 @@
                 <executions>
                     <execution>
                         <id>war-deploy</id>
-                        <phase>integration-test</phase>
+                        <phase>pre-integration-test</phase>
                         <goals>
                             <goal>deploy</goal>
                         </goals>

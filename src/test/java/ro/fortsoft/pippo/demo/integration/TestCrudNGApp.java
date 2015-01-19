@@ -1,6 +1,7 @@
 package ro.fortsoft.pippo.demo.integration;
 
 import com.google.common.base.Function;
+import org.jsoup.Jsoup;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -10,7 +11,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 /**
  * @author Serban Balamaci
  */
-public class TestSystemCheckWD extends BaseWebdriverTest {
+public class TestCrudNGApp extends BaseWebdriverTest {
 
     public static final String APP_CONTEXT = "pippo";
 
