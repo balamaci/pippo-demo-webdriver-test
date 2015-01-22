@@ -13,14 +13,19 @@ import org.openqa.selenium.support.ui.WebDriverWait;
  */
 public class TestCrudNgDemoApp extends BaseWebdriverTest {
 
-    public static final String APP_CONTEXT = "pippo";
-
     @Test public void
     forAuthorizedUserLoginSuccessful() {
         WebDriver driver = getDriver();
-        driver.get(serverUrl + "/" + APP_CONTEXT + "/login");
+        driver.get(getBaseUrl() + "/login");
 
-        fillUserLoginData();
+        WebDriverWait wait = new WebDriverWait(driver, 5);
+        wait.until(new Function<WebDriver, Boolean>() {
+            @Override
+            public Boolean apply(WebDriver webDriver) {
+                return webDriver.(By.name("username")).;
+            }
+        });
+        fillUserLoginData(driver);
 
         WebDriverWait wait = new WebDriverWait(driver, 5);
         wait.until(new Function<WebDriver, Boolean>() {
@@ -31,10 +36,7 @@ public class TestCrudNgDemoApp extends BaseWebdriverTest {
         });
     }
 
-    private void fillUserLoginData() {
-        WebDriver driver = getDriver();
-        getDriver().get(serverUrl + "/" + APP_CONTEXT + "/login");
-
+    private void fillUserLoginData(WebDriver driver) {
         String username = "admin";
         WebElement txtUsername = driver.findElement(By.name("username"));
         txtUsername.sendKeys(username);

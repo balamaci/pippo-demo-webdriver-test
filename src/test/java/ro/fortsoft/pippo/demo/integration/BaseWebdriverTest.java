@@ -58,4 +58,9 @@ public abstract class BaseWebdriverTest {
             phantomJSDriverService.stop();
         }
     }
+
+    public String getBaseUrl() {
+        return serverUrl + "/" + appContext;
+    }
+
 }

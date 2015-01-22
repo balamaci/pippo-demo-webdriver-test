@@ -11,9 +11,10 @@
 
 
     <properties>
-        <phantomjs.binary.path>${project.build.directory}/node_modules/phantomjs/lib/phantom/bin/phantomjs</phantomjs.binary.path>
+        <phantomjs.binary.path>${project.basedir}/node_modules/phantomjs/lib/phantom/bin/phantomjs</phantomjs.binary.path>
         <docker.output.dir>${project.build.directory}/docker_output_dir</docker.output.dir>
         <webapp.deploy.context>/pippo</webapp.deploy.context>
+        <war.file.location>pippo-demo.war</war.file.location>
 
         <jsoup.version>1.7.3</jsoup.version>
         <compiler.version>1.7</compiler.version>
