@@ -23,10 +23,12 @@ public abstract class BaseWebdriverTest {
     private static PhantomJSDriverService phantomJSDriverService;
 
     protected static String serverUrl;
+    protected static String appContext;
 
     @BeforeClass
     public static void init() throws Exception {
         serverUrl = "http://" + System.getProperty("container.host");
+        appContext = System.getProperty("webapp.deploy.context");
 
         phantomJSDriverService = PhantomJSDriverService.createDefaultService();
         phantomJSDriverService.start();

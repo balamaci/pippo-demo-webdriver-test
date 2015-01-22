@@ -13,6 +13,7 @@
     <properties>
         <phantomjs.binary.path>${project.build.directory}/node_modules/phantomjs/lib/phantom/bin/phantomjs</phantomjs.binary.path>
         <docker.output.dir>${project.build.directory}/docker_output_dir</docker.output.dir>
+        <webapp.deploy.context>/pippo</webapp.deploy.context>
 
         <jsoup.version>1.7.3</jsoup.version>
         <compiler.version>1.7</compiler.version>
@@ -43,11 +44,11 @@
         </dependency>
 
         <dependency>
-            <groupId>com.github.detro.ghostdriver</groupId>
+            <groupId>com.github.detro</groupId>
             <artifactId>phantomjsdriver</artifactId>
-            <version>1.1.0</version>
-            <scope>test</scope>
+            <version>1.2.0</version>
         </dependency>
+
 
     </dependencies>
 
@@ -120,9 +121,9 @@
                     <deployables>
                         <deployable>
                             <type>war</type>
-                            <location>${project.build.directory}/pippo-demo.war</location>
+                            <location>${war.file.location}</location>
                             <properties>
-                                <context>pippo</context>
+                                <context>${webapp.deploy.context}</context>
                             </properties>
                         </deployable>
                     </deployables>
