@@ -2,11 +2,11 @@ package ro.fortsoft.pippo.demo.integration;
 
 import com.google.common.base.Function;
 import org.jsoup.Jsoup;
+import org.junit.Rule;
 import org.junit.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import ro.fortsoft.pippo.demo.integration.rule.TakeScreenshotOnFailedTaskRule;
 import ro.fortsoft.pippo.demo.integration.util.UrlUtil;
 
 /**
@@ -17,9 +17,7 @@ public class TestCrudNgDemoApp extends BaseWebdriverTest {
     @Test public void
     forAuthorizedUserLoginSuccessful() {
         WebDriver driver = getDriver();
-        System.out.println("Base url " + getBaseUrl());
         driver.get(getBaseUrl() + "login");
-
 
         WebDriverWait wait = new WebDriverWait(driver, 5);
 

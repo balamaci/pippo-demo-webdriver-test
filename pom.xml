@@ -19,6 +19,7 @@
         <jsoup.version>1.7.3</jsoup.version>
         <compiler.version>1.7</compiler.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>${project.build.sourceEncoding}</project.reporting.outputEncoding>
     </properties>
 
     <dependencies>
@@ -151,6 +152,7 @@
                         <phantomjs.binary.path>${phantomjs.binary.path}</phantomjs.binary.path>
                         <container.host>${CONTAINER_IP}:8080</container.host>
                         <webapp.deploy.context>${webapp.deploy.context}</webapp.deploy.context>
+                        <webdriver.screenshot.path>${build.directory}/screenshot</webdriver.screenshot.path>
                     </systemPropertyVariables>
                     <includes>
                         <include>**/Test*.java</include>
