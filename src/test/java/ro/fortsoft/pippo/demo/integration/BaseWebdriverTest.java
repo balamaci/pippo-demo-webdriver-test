@@ -10,8 +10,11 @@ import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriverService;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import ro.fortsoft.pippo.demo.integration.util.UrlUtil;
 
 import java.util.logging.Level;
+
+import static ro.fortsoft.pippo.demo.integration.util.UrlUtil.appendSlashOnRightSide;
 
 /**
  * @author Serban Balamaci
@@ -60,7 +63,8 @@ public abstract class BaseWebdriverTest {
     }
 
     public String getBaseUrl() {
-        return serverUrl + "/" + appContext;
+        String baseUrl = appendSlashOnRightSide(serverUrl) + appContext;
+        return appendSlashOnRightSide(baseUrl);
     }
 
 }

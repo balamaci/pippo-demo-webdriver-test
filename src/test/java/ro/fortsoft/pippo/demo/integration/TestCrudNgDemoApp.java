@@ -7,6 +7,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import ro.fortsoft.pippo.demo.integration.util.UrlUtil;
 
 /**
  * @author Serban Balamaci
@@ -16,18 +17,21 @@ public class TestCrudNgDemoApp extends BaseWebdriverTest {
     @Test public void
     forAuthorizedUserLoginSuccessful() {
         WebDriver driver = getDriver();
-        driver.get(getBaseUrl() + "/login");
+        System.out.println("Base url " + getBaseUrl());
+        driver.get(getBaseUrl() + "login");
+
 
         WebDriverWait wait = new WebDriverWait(driver, 5);
+
         wait.until(new Function<WebDriver, Boolean>() {
             @Override
             public Boolean apply(WebDriver webDriver) {
-                return webDriver.(By.name("username")).;
+                return webDriver.findElement(By.name("username")) != null;
             }
         });
+
         fillUserLoginData(driver);
 
-        WebDriverWait wait = new WebDriverWait(driver, 5);
         wait.until(new Function<WebDriver, Boolean>() {
             @Override
             public Boolean apply(WebDriver webDriver) {

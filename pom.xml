@@ -13,7 +13,7 @@
     <properties>
         <phantomjs.binary.path>${project.basedir}/node_modules/phantomjs/lib/phantom/bin/phantomjs</phantomjs.binary.path>
         <docker.output.dir>${project.build.directory}/docker_output_dir</docker.output.dir>
-        <webapp.deploy.context>/pippo</webapp.deploy.context>
+        <webapp.deploy.context>pippo</webapp.deploy.context>
         <war.file.location>pippo-demo.war</war.file.location>
 
         <jsoup.version>1.7.3</jsoup.version>
@@ -34,13 +34,6 @@
             <groupId>org.jsoup</groupId>
             <artifactId>jsoup</artifactId>
             <version>${jsoup.version}</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-api</artifactId>
-            <version>2.39.0</version>
             <scope>test</scope>
         </dependency>
 
@@ -157,6 +150,7 @@
                     <systemPropertyVariables>
                         <phantomjs.binary.path>${phantomjs.binary.path}</phantomjs.binary.path>
                         <container.host>${CONTAINER_IP}:8080</container.host>
+                        <webapp.deploy.context>${webapp.deploy.context}</webapp.deploy.context>
                     </systemPropertyVariables>
                     <includes>
                         <include>**/Test*.java</include>
